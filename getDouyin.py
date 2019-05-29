@@ -5,7 +5,6 @@
 
 from bs4 import BeautifulSoup as bs
 import requests
-import time
 import sys
 
 
@@ -29,7 +28,7 @@ def getContent(data):
 
 	scriptStr = bs(data.content,'lxml').find_all("script")[-1].get_text()
 
-	videoUrl = "https:"+scriptStr.split(",")[3].split(":")[2].replace("playwm","play").replace('"','')
+	videoUrl = "https:"+scriptStr.split(",")[3].split(":")[2].replace('"','')
 
 	return videoUrl
 
