@@ -40,6 +40,25 @@ def get(url,isGetId=0,awemeId=awemeId,api=api):
 		resArr = json.loads(res.content)
 
 		return resArr
+	if isGetId==2:#下载
+		header ={'user-agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Mobile Safari/537.36'}
+
+		res = requests.get(url,headers=header,allow_redirects=0)
+
+		return res.headers['Location']
+
+
+#下载文件
+def downloadFile(url,mp4Name):
+	videoUrl = get(url,2)
+
+	res = requests.get(videoUrl)
+
+	with open(mp4Name, "wb") as f:
+		f.write(res.content)
+	print("<h1>视频下载完成</h1>")
+
+
 
 if __name__ == '__main__':
 
@@ -65,6 +84,12 @@ if __name__ == '__main__':
 	print("无水印视频连接2："+getAllDataArr['aweme_detail']['video']['play_addr']['url_list'][1])
 	print("带水印视频连接1："+getAllDataArr['aweme_detail']['video']['download_addr']['url_list'][0])
 	print("带水印视频连接2："+getAllDataArr['aweme_detail']['video']['download_addr']['url_list'][1])
+
+	#下载
+	print("开始下载无水印视频")
+
+	downloadFile(getAllDataArr['aweme_detail']['video']['play_addr']['url_list'][0],getAllDataArr['aweme_detail']['share_info']['share_title']+".mp4")
+
 	
 
 
